@@ -8,9 +8,19 @@ require('dotenv').config();
 
 const app = express();
 
+// 👉 CORS POLICY UPDATE: Allowing Vercel and Localhost explicitly
+app.use(cors({
+    origin: [
+        'https://placement-portal-three-amber.vercel.app', // Tera Vercel Frontend
+        'http://localhost:3000',                           // Localhost React
+        'http://localhost:5173'                            // Localhost Vite
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    credentials: true // Agar cookies/tokens bhej raha hai toh ye zaroori hai
+}));
+
 // Middleware
 app.use(express.json());
-app.use(cors());
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
@@ -25,7 +35,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Test Route
 app.get('/', (req, res) => {
-    res.send('Placement Portal Server is Running!');
+    res.send('Placement Portal Server is Running Smoothly! 🚀');
 });
 
 // Server Start
