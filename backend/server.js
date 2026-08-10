@@ -8,18 +8,18 @@ require('dotenv').config();
 
 const app = express();
 
-// 🔥 BRAHMASTRA CORS FIX: Preflight OPTIONS ko force-allow karega
+// 🔥 BRAHMASTRA CORS FIX (All Origins Allowed)
 app.use(cors({
     origin: function (origin, callback) {
-        callback(null, true); // Duniya ke kisi bhi URL ko allow kar dega (0% CORS Error)
+        callback(null, true); 
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
     credentials: true
 }));
 
-// Preflight request handler (Tujhe jo error aa raha hai wo exactly isi line se theek hoga)
-app.options('*', cors());
+// ✅ EXPRESS 5 CRASH FIX: '*' hata kar Regex /^.*/ laga diya
+app.options(/^.*/, cors());
 
 // Middleware
 app.use(express.json());
@@ -35,7 +35,7 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('✅ MongoDB Connected Successfully'))
     .catch((err) => console.log('❌ MongoDB Connection Error:', err));
 
-// Test Route (Ye check karna zaroori hai update ke baad)
+// Test Route 
 app.get('/', (req, res) => {
     res.send('Placement Portal Server is Running (CORS FULLY UNLOCKED) 🚀');
 });
