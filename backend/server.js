@@ -1,5 +1,5 @@
 const dns = require('dns');
-dns.setDefaultResultOrder('ipv4first'); // NATIVE FETCH FAILED FIX
+dns.setDefaultResultOrder('ipv4first');
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -8,17 +8,18 @@ require('dotenv').config();
 
 const app = express();
 
-// 👉 CORS POLICY UPDATE: Naya Vercel URL Allow Kar Diya Hai
+// 🔥 BRAHMASTRA CORS FIX: Preflight OPTIONS ko force-allow karega
 app.use(cors({
-    origin: [
-        'https://placement-portal-nhbdqqq9v.vercel.app',   // 🔥 TERA NAYA URL (Ye chalega ab)
-        'https://placement-portal-three-amber.vercel.app', // Purana URL (Backup ke liye)
-        'http://localhost:3000',                           // Localhost React
-        'http://localhost:5173'                            // Localhost Vite
-    ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    credentials: true // Cookies/Tokens ke liye zaroori
+    origin: function (origin, callback) {
+        callback(null, true); // Duniya ke kisi bhi URL ko allow kar dega (0% CORS Error)
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+    credentials: true
 }));
+
+// Preflight request handler (Tujhe jo error aa raha hai wo exactly isi line se theek hoga)
+app.options('*', cors());
 
 // Middleware
 app.use(express.json());
@@ -27,16 +28,16 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/questions', require('./routes/questions'));
 app.use('/api/results', require('./routes/results'));
-app.use('/api/interview', require('./routes/interview')); // AI Interview Route
+app.use('/api/interview', require('./routes/interview')); 
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('✅ MongoDB Connected Successfully'))
     .catch((err) => console.log('❌ MongoDB Connection Error:', err));
 
-// Test Route
+// Test Route (Ye check karna zaroori hai update ke baad)
 app.get('/', (req, res) => {
-    res.send('Placement Portal Server is Running Smoothly! 🚀');
+    res.send('Placement Portal Server is Running (CORS FULLY UNLOCKED) 🚀');
 });
 
 // Server Start
