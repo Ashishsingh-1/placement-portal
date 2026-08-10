@@ -3,23 +3,26 @@ dns.setDefaultResultOrder('ipv4first');
 
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
 
-// 🔥 BRAHMASTRA CORS FIX (All Origins Allowed)
-app.use(cors({
-    origin: function (origin, callback) {
-        callback(null, true); 
-    },
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
-    credentials: true
-}));
+// 🔥 CUSTOM CORS ENGINE: Duniya ka koi bhi Frontend block nahi hoga!
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (origin) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
 
-// ✅ EXPRESS 5 CRASH FIX: '*' hata kar Regex /^.*/ laga diya
-app.options(/^.*/, cors());
+    // Preflight (OPTIONS) request ko direct 200 OK bhej do
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+    next();
+});
 
 // Middleware
 app.use(express.json());
@@ -35,9 +38,9 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('✅ MongoDB Connected Successfully'))
     .catch((err) => console.log('❌ MongoDB Connection Error:', err));
 
-// Test Route 
+// Test Route (Ye check karna ki update hua ya nahi)
 app.get('/', (req, res) => {
-    res.send('Placement Portal Server is Running (CORS FULLY UNLOCKED) 🚀');
+    res.send('Placement Portal Server is Running (CUSTOM CORS FULLY UNLOCKED) 🚀');
 });
 
 // Server Start
