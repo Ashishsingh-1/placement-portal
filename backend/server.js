@@ -8,15 +8,16 @@ require('dotenv').config();
 
 const app = express();
 
-// 👉 CORS POLICY UPDATE: Allowing Vercel and Localhost explicitly
+// 👉 CORS POLICY UPDATE: Naya Vercel URL Allow Kar Diya Hai
 app.use(cors({
     origin: [
-        'https://placement-portal-three-amber.vercel.app', // Tera Vercel Frontend
+        'https://placement-portal-nhbdqqq9v.vercel.app',   // 🔥 TERA NAYA URL (Ye chalega ab)
+        'https://placement-portal-three-amber.vercel.app', // Purana URL (Backup ke liye)
         'http://localhost:3000',                           // Localhost React
         'http://localhost:5173'                            // Localhost Vite
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    credentials: true // Agar cookies/tokens bhej raha hai toh ye zaroori hai
+    credentials: true // Cookies/Tokens ke liye zaroori
 }));
 
 // Middleware
