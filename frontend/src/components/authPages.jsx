@@ -18,7 +18,7 @@ const AuthPage = () => {
     
     try {
         const API_BASE = window.location.hostname === 'localhost' 
-            ? 'http://localhost:5000' 
+            ? 'https://placement-portal-yq2h.onrender.com' 
             : 'https://placement-portal-9mz5.onrender.com';
 
         const endpoint = isLogin ? `${API_BASE}/api/auth/login` : `${API_BASE}/api/auth/register`;

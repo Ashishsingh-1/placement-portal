@@ -26,7 +26,7 @@ const Register = () => {
     e.preventDefault(); // Page ko reload hone se rokna
     try {
       // Backend ke Register API ko data bhejna
-      const response = await axios.post('http://localhost:5000/api/auth/register', formData);
+      const response = await axios.post('https://placement-portal-yq2h.onrender.com/api/auth/register', formData);
       
       setMessage(response.data.message);
       setIsError(false);

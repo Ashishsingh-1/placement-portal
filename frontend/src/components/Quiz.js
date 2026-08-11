@@ -38,7 +38,7 @@ const Quiz = () => {
     }
     const fetchQuestions = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/questions/random');
+        const response = await axios.get('https://placement-portal-yq2h.onrender.com/api/questions/random');
         setQuestions(response.data);
       } catch (error) {
         console.error("Error fetching questions:", error);
@@ -60,7 +60,7 @@ const Quiz = () => {
     const userId = localStorage.getItem('userId');
     if (userId && questions.length > 0) {
       try {
-        await axios.post('http://localhost:5000/api/results/save', {
+        await axios.post('https://placement-portal-yq2h.onrender.com/api/results/save', {
           userId: userId,
           score: finalScore,
           totalQuestions: questions.length,

@@ -211,7 +211,7 @@ const InterviewRoom = () => {
         updateStatus(STATUS.INIT);
         alert("Interview Complete! Generating your detailed evaluation report...");
         try {
-            const reportRes = await axios.post('http://localhost:5000/api/interview/evaluate-interview', {
+            const reportRes = await axios.post('https://placement-portal-yq2h.onrender.com/api/interview/evaluate-interview', {
                 roundType: roundType,
                 transcriptions: transcriptionsRef.current
             });
@@ -287,7 +287,7 @@ const InterviewRoom = () => {
   const sendTextToBackend = async (textAnswer) => {
     try {
       if (questionIndex === TOTAL_QUESTIONS && textAnswer !== "[User remained silent]") {
-        const res = await axios.post('http://localhost:5000/api/interview/wrap-up', {
+        const res = await axios.post('https://placement-portal-yq2h.onrender.com/api/interview/wrap-up', {
             roundType,
             userTranscript: textAnswer
         });
@@ -309,7 +309,7 @@ const InterviewRoom = () => {
         return;
       }
 
-      const res = await axios.post('http://localhost:5000/api/interview/process-text-answer', {
+      const res = await axios.post('https://placement-portal-yq2h.onrender.com/api/interview/process-text-answer', {
         roundType: roundType,
         questionIndex: questionIndex,
         currentQuestion: currentQuestionRef.current,
@@ -355,7 +355,7 @@ const InterviewRoom = () => {
     updateStatus(STATUS.INIT);
     silenceAttemptRef.current = 0; 
     try {
-      const res = await axios.post('http://localhost:5000/api/interview/generate-question', { 
+      const res = await axios.post('https://placement-portal-yq2h.onrender.com/api/interview/generate-question', { 
           roundType, 
           resumeText,
           previousQuestions: previousQuestionsRef.current

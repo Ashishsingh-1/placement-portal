@@ -38,7 +38,7 @@ const Admin = () => {
     };
 
     try {
-      await axios.post('http://localhost:5000/api/questions/add', finalData);
+      await axios.post('https://placement-portal-yq2h.onrender.com/api/questions/add', finalData);
       setMessage('✅ Question added successfully!');
       
       // Form ko clear kar dena (Taaki agla question add kar sakein)

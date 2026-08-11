@@ -37,7 +37,7 @@ const Preparation = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/questions');
+        const response = await axios.get('https://placement-portal-yq2h.onrender.com/api/questions');
         const data = response.data;
         setAllQuestions(data);
         if (data.length > 0) {
@@ -94,7 +94,7 @@ const Preparation = () => {
     const userId = localStorage.getItem('userId'); 
     if (!userId) { alert("Please log in first to save questions!"); return; }
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/bookmark', { userId, questionId });
+      const res = await axios.post('https://placement-portal-yq2h.onrender.com/api/auth/bookmark', { userId, questionId });
       const updatedBookmarks = res.data.bookmarks;
       setBookmarkedQuestions(updatedBookmarks);
       localStorage.setItem('userBookmarks', JSON.stringify(updatedBookmarks));
