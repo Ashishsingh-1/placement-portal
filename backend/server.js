@@ -38,13 +38,13 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('✅ MongoDB Connected Successfully'))
     .catch((err) => console.log('❌ MongoDB Connection Error:', err));
 
-// Test Route (Ye check karna ki update hua ya nahi)
+// Test Route
 app.get('/', (req, res) => {
-    res.send('Placement Portal Server is Running (CUSTOM CORS FULLY UNLOCKED) 🚀');
+    res.send('Placement Portal Server is Running (CORS & PORT FULLY UNLOCKED) 🚀');
 });
 
-// Server Start
+// 🔥 Server Start (Render Port Fix '0.0.0.0' ke sath)
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Server is running on port ${PORT}`);
 });
