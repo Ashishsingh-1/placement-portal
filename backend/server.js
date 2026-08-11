@@ -3,26 +3,16 @@ dns.setDefaultResultOrder('ipv4first');
 
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors'); // 👉 CORS wapas add kar diya
 require('dotenv').config();
 
 const app = express();
 
-// 🔥 CUSTOM CORS ENGINE: Duniya ka koi bhi Frontend block nahi hoga!
-app.use((req, res, next) => {
-    const origin = req.headers.origin;
-    if (origin) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-    }
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-
-    // Preflight (OPTIONS) request ko direct 200 OK bhej do
-    if (req.method === 'OPTIONS') {
-        return res.status(200).end();
-    }
-    next();
-});
+// 🔥 THE ULTIMATE CORS FIX (Ye apne aap har Vercel URL ko allow karega)
+app.use(cors({
+    origin: true, 
+    credentials: true
+}));
 
 // Middleware
 app.use(express.json());
@@ -40,7 +30,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Test Route
 app.get('/', (req, res) => {
-    res.send('Placement Portal Server is Running (CORS & PORT FULLY UNLOCKED) 🚀');
+    res.send('Placement Portal Server is Running (ULTIMATE CORS & PORT UNLOCKED) 🚀');
 });
 
 // 🔥 Server Start (Render Port Fix '0.0.0.0' ke sath)
